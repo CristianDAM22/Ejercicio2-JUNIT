@@ -19,6 +19,23 @@ public class Vuelo {
     public boolean ventaDeBilletes(int numerodeBilletes, int tipoPlaza) {
         boolean vendido = false;
 
+        /*LOS IF LOS PUDES HACER CON UN SWITCH
+        SWITCH(TIPOPLAZA){
+        CASE 1:
+             if (numerodeBilletes <= (numPlazasTuristas - numPlazasOcupadasTuristas)) {
+                numPlazasOcupadasTuristas = numPlazasOcupadasTuristas + numerodeBilletes;
+                vendido = true;
+        }        
+        BREAK;
+        CASE 2:
+            If (numerodeBilletes <= (numPlazasBusines - numPlazasOcupadasBusines)) {
+                numPlazasOcupadasBusines = numPlazasOcupadasBusines + numerodeBilletes;
+                vendido = true;
+            }
+        BREAK;
+          }
+         */
+        
         if (tipoPlaza == 1) {
             if (numerodeBilletes <= (numPlazasTuristas - numPlazasOcupadasTuristas)) {
                 numPlazasOcupadasTuristas = numPlazasOcupadasTuristas + numerodeBilletes;
@@ -50,6 +67,14 @@ public class Vuelo {
 
     public int getNumPlazasOcupadasBusines() {
         return numPlazasOcupadasBusines;
+    }
+
+    public int getNumPlazasTuristas() {
+        return numPlazasTuristas;
+    }
+
+    public int getNumPlazasOcupadasTuristas() {
+        return numPlazasOcupadasTuristas;
     }
 
 }
