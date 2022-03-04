@@ -1,3 +1,4 @@
+//POSIBLE ERROR DEBIDO A QUE EN CLASE SE HAN PUESTO LOS DATOS EN DISTINTO ORDEN,LA ESTRUCTURA ESTA BIEN
 package Vuelo;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class VueloTest {
 //TANTAS PROPIEDADES COMO VALORES HAY QUE COMPROBAR
     //PLAZAS TOTALES
+
     int numPlazasTuristas;
     int numPlazasBusines;
     //PLAZAS OCUPADAS
@@ -24,15 +26,18 @@ public class VueloTest {
     EL RESULTADO DUDA NO SE LO QUE ES EXACTAMENTE*/
     int numeroPlazas;
     int tipoPlaza;
-    int resultado;
-    
+
     boolean posible;
     Vuelo instance;
 
     /**
      * EN LAS PRUEBAS PARAMETRIZADAS SOLO PUEDE HABER UN CONSTRUCTOR
      */
-    public VueloTest(int numPlazasTuristas, int numPlazasBusines, int numPlazasOcupadasTuristas, int numPlazasOcupadasBusines, int numPlazasOcupadasTuristasDespues, int numPlazasOcupadasBusinesDespues, int numeroPlazas, int tipoPlaza, int resultado, boolean posible) {
+    public VueloTest(int numPlazasTuristas, int numPlazasBusines, int numPlazasOcupadasTuristas,
+            int numPlazasOcupadasBusines, int numPlazasOcupadasTuristasDespues,
+            int numPlazasOcupadasBusinesDespues, int numeroPlazas,
+            int tipoPlaza, boolean posible) {
+
         this.numPlazasTuristas = numPlazasTuristas;
         this.numPlazasBusines = numPlazasBusines;
         this.numPlazasOcupadasTuristas = numPlazasOcupadasTuristas;
@@ -41,31 +46,39 @@ public class VueloTest {
         this.numPlazasOcupadasBusinesDespues = numPlazasOcupadasBusinesDespues;
         this.numeroPlazas = numeroPlazas;
         this.tipoPlaza = tipoPlaza;
-        this.resultado = resultado;
         this.posible = posible;
     }
+
     /**
      * CASOS A CREAR: 4-->UNO POSBLE Y OTRO QUE NO TE DEJE PARA LAS PLAZAS
      * TURSTAS Y LAS PLAZAS BUSINESS.
      */
+    
     @Parameters
     public static Collection<Object[]> casosPrueba() {
         return Arrays.asList(
-                new Object[][]{
-                    {20, 5, 30, 20, true},
-                    {25, 6, 40, 20, true}
+                new Object[][]{//PONER LOS DATOS BIEN PARA QUE DE LA CONDICION QUE PONGO
+                    {30,20,10,5,20,15,5,1,true},//TRUE
+                    {30,20,10,5,20,40,5,1,false},//FALSE:PIDO MAS PLAZAS DE LAS QUE DISPONGO
+                    {30,20,10,5,20,15,5,2,true},//TRUE
+                    {30,20,10,5,20,15,20,2,false}//FALSE:NO SE PUEDE HACER LA SERVA DE BUSINESS
                 });
     }
 
     /**
      * METODO DE PRUEBAS PARAMETRIZAADAS
      */
+    
     @Test
     public void testVentaDeBilletes() {
         System.out.println("ventaDeBilletes");
-        int numeroBilletes = 100;
-        int tipoPlaza = 1;
-        boolean result = instance.ventaDeBilletes(numeroBilletes, tipoPlaza);
+        Vuelo instance=new Vuelo(numPlazasTuristas,numPlazasBusines,numPlazasOcupadasTuristas,numPlazasOcupadasBusines); //AQUI PONGO LAS PROPIEDADES DEL METODO ORIGINAL PERO CON LAS PROPIEDADES DEL TEST
+        boolean result = instance.ventaDeBilletes(numeroPlazas, tipoPlaza);
+        
+        assertEquals("Error al actulizar plazas turistas", instance.getNumPlazasOcupadasTuristas(),  numPlazasOcupadasTuristasDespues);
+        
+        assertEquals("Error al actualizar plazas business", instance.getNumPlazasOcupadasBusines(), numPlazasOcupadasBusinesDespues);
+        
         assertEquals("No se puede realizar la reserva", posible, result);
 
     }
